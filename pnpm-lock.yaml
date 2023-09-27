@@ -126,6 +126,9 @@ importers:
       gsap:
         specifier: ^3.12.2
         version: 3.12.2
+      pnpm:
+        specifier: ^8.8.0
+        version: 8.8.0
       tailwind-merge:
         specifier: ^1.14.0
         version: 1.14.0
@@ -7628,7 +7631,6 @@ packages:
     resolution: {integrity: sha512-eY5rMiZpzmPI2oVr1irR97bzb036oKwCWvK91wDQndXcqUPlytPtrF0bO668Syw/uA+7hTf5NnM8Mr4ux4BRRA==}
     engines: {node: '>=16.14'}
     hasBin: true
-    dev: true
 
   /postcss-import@15.1.0(postcss@8.4.30):
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}
