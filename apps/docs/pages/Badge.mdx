@@ -1,0 +1,337 @@
+import React, { useState } from "react";
+import { Steps } from "nextra/components";
+import { ArrowTopRightIcon } from "@radix-ui/react-icons";
+import { Tabs } from "@radix-ui/themes";
+import { Badge, Badges } from "ui";
+import {
+  CodeMinimizer,
+  PropsCard,
+  BadgeVariants,
+  ColoredBadges,
+} from "../components";
+
+# Badge
+
+Badge component inspired by [shadcn/ui<ArrowTopRightIcon className='inline'/>](https://ui.shadcn.com/docs/components/badge) with dynamic Badges wrapper component.
+
+<div className="w-full h-8" />
+
+## Components
+
+### Badge
+
+<Tabs.Root defaultValue="preview">
+  <Tabs.List>
+    <Tabs.Trigger value="preview">Preview</Tabs.Trigger>
+    <Tabs.Trigger value="code">Code</Tabs.Trigger>
+  </Tabs.List>
+  <div className="px-4 pt-3 pb-2">
+    <Tabs.Content value="preview">
+      <BadgeVariants />
+    </Tabs.Content>
+
+    <Tabs.Content value="code">
+      ```jsx copy
+        <Badge variant='default' children={'default'} />
+        <Badge variant='secondary' children={'secondary'} />
+        <Badge variant='destructive' children={'destructive'} />
+        <Badge variant='outline' children={'outline'} />
+        <Badge variant='round' children={'round'} />
+      ````
+    </Tabs.Content>
+
+  </div>
+
+</Tabs.Root>
+
+<div className="w-full h-8" />
+
+### Badges
+
+<Tabs.Root defaultValue="preview">
+  <Tabs.List>
+    <Tabs.Trigger value="preview">Preview</Tabs.Trigger>
+    <Tabs.Trigger value="code">Code</Tabs.Trigger>
+  </Tabs.List>
+  <div className="px-4 pt-3 pb-2">
+    <Tabs.Content value="preview">
+      <ColoredBadges />
+    </Tabs.Content>
+    <Tabs.Content value="code">
+       ```tsx copy
+      import React from 'react';
+      import Badge from './Badge';
+
+      const badgeVariations = [
+          {
+              variant: 'outline',
+              colors: 'bg-red-200 text-red-800 border-red-800 hover:bg-red-600 hover:text-red-200',
+              content: 'apple',
+          },
+          {
+              variant: 'outline',
+              colors: 'bg-green-200 text-green-800 border-green-800 hover:bg-green-600 hover:text-green-200',
+              content: 'grape',
+          },
+          {
+              variant: 'outline',
+              colors: 'bg-blue-200 text-blue-800 border-blue-800 hover:bg-blue-600 hover:text-blue-200',
+              content: 'cherry',
+          },
+          {
+              variant: 'outline',
+              colors: 'bg-yellow-200 text-yellow-800 border-yellow-800 hover:bg-yellow-600 hover:text-yellow-200',
+              content: 'banana',
+          },
+          {
+              variant: 'outline',
+              colors: 'bg-indigo-200 text-indigo-800 border-indigo-800 hover:bg-indigo-600 hover:text-indigo-200',
+              content: 'pear',
+          },
+          {
+              variant: 'outline',
+              colors: 'bg-purple-200 text-purple-800 border-purple-800 hover:bg-purple-600 hover:text-purple-200',
+              content: 'strawberry',
+          },
+          {
+              variant: 'outline',
+              colors: 'bg-pink-200 text-pink-800 border-pink-800 hover:bg-pink-600 hover:text-pink-200',
+              content: 'watermelon',
+          },
+          {
+              variant: 'outline',
+              colors: 'bg-gray-200 text-gray-800 border-gray-800 hover:bg-gray-600 hover:text-gray-200',
+              content: 'orange',
+          },
+      ];
+    <Badges length={4} className='w-[256px]'>
+        {badgeVariations.map((variation, index) => (
+            <Badge
+                key={index}
+                variant={variation.variant}
+                className={variation.colors}
+            >
+                {variation.content}
+            </Badge>
+          ))}
+    </Badges>;
+
+    ````
+    </Tabs.Content>
+    </div>
+
+</Tabs.Root>
+
+<div className="w-full h-8" />
+
+## API Reference
+
+### Badge
+
+<PropsCard
+  name="variant"
+  description="Style of the individual badge."
+  type='"default" | "secondary" | "destructive" | "outline" | "round"'
+/>
+
+### Badges
+
+<PropsCard
+  name="length"
+  description="Represents the amount of badges displayed before they get truncated"
+  type="number"
+/>
+<PropsCard
+  name="stagger"
+  description="Animation delay between each component."
+  type="number"
+/>
+
+<div className="w-full h-8" />
+
+## Installation
+
+<Tabs.Root defaultValue="Manual">
+  <Tabs.List>
+    <Tabs.Trigger value="Manual">Manual</Tabs.Trigger>
+    <Tabs.Trigger value="CLI">CLI</Tabs.Trigger>
+  </Tabs.List>
+
+  <div className="px-4 pt-3 pb-2">
+    <Tabs.Content value="Manual">
+      <Steps>
+        ### Step 1
+
+        Install Dependencies
+
+        ```bash copy
+        npm install gsap
+        ```
+
+    			### Step 2
+
+    			Copy and paste code into your project
+
+       <CodeMinimizer>
+
+        ```tsx copy
+        import React, { forwardRef, useState, useEffect, useRef } from 'react';
+        import { cva, type VariantProps } from 'class-variance-authority';
+        import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
+        import { cn } from '../utils';
+        import gsap from 'gsap';
+
+        const badgeVariants = cva(
+          'inline-flex items-center px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer',
+          {
+            variants: {
+              variant: {
+                default:
+                  'border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80 rounded-md',
+                secondary:
+                  'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-md',
+                destructive:
+                  'border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80 rounded-md',
+                outline: 'text-foreground rounded-md border-2',
+                round:
+                  'bg-primary text-primary-foreground rounded-full hover:bg-primary/80',
+              },
+            },
+            defaultVariants: {
+              variant: 'default',
+            },
+          }
+        );
+
+        export interface BadgeProps
+          extends React.HTMLAttributes<HTMLDivElement>,
+            VariantProps<typeof badgeVariants> {}
+
+        const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
+          ({ className, variant, ...props }, ref) => {
+            return (
+              <div
+                className={cn(badgeVariants({ variant }), className)}
+                ref={ref}
+                {...props}
+              />
+            );
+          }
+        );
+
+        export interface BadgesProps extends React.HTMLAttributes<HTMLDivElement> {
+          length: number;
+          stagger?: number;
+        }
+
+        const Badges = forwardRef<HTMLDivElement, BadgesProps>(
+          ({ children, className, length, stagger, ...props }, ref) => {
+            const [opened, setOpened] = useState(false);
+            const [shortened, setShortened] = useState<React.ReactNode[]>([]);
+            const elements = useRef<HTMLDivElement[] >([]);
+
+            const animateChildren = () => {
+              const animations = gsap.timeline({
+                defaults: {
+                  duration: stagger,
+                  scaleY: 0.1,
+                },
+              });
+              elements.current.slice(length).forEach((element, index) => {
+                animations.from(element, {
+                  opacity: 0,
+                  y: '+=15',
+                  ease: 'circ',
+                });
+              });
+            };
+
+            const handleShowMore = () => {
+              setShortened(React.Children.toArray(children));
+              setOpened(true);
+            };
+
+            const shortenChildren = () => {
+              const reactNodeArray = React.Children.toArray(children);
+              if (reactNodeArray.length > length) {
+                setShortened(reactNodeArray.slice(0, length));
+              } else {
+                setShortened(reactNodeArray);
+              }
+              setOpened(false);
+            };
+
+            useEffect(() => {
+              shortenChildren();
+            }, [children, length]);
+
+            useEffect(() => {
+              if (opened) {
+                animateChildren();
+              }
+            }, [opened]);
+
+            return (
+              <div
+                {...props}
+                ref={ref}
+                className={cn( 'flex gap-1 flex-wrap', className)}
+              >
+                {shortened.map((node, index) => (
+                  <div key={index} ref={(el) => (elements.current[index] = el as never)}>
+                    {node}
+                  </div>
+                ))}
+                {shortened.length === React.Children.toArray(children).length ? (
+                  shortened.length <= length ? null : (
+                    <Badge variant={'outline'} onClick={shortenChildren}   className="relative group"
+                    >
+                      {' '}
+                      {'Show Less'} <ChevronUpIcon className='w-4 h-4 transform group-hover:rotate-180 transition duration-300'/>
+                    </Badge>
+                  )
+                ) : (
+                  <Badge variant={'outline'} onClick={handleShowMore} className='relative group'>
+                    {'Show More'}<ChevronDownIcon className='w-4 h-4'/>
+                  </Badge>
+                )}
+              </div>
+            );
+          }
+        );
+
+        export { Badge, Badges, badgeVariants };
+
+        ```
+
+        </CodeMinimizer>
+
+    			### Step 3
+
+    			Update imports
+
+    			</Steps>
+    </Tabs.Content>
+
+    <Tabs.Content value="CLI">
+      <p>Under Construction</p>
+    </Tabs.Content>
+
+  </div>
+</Tabs.Root>
+
+## Usage
+
+```tsx copy
+import { Badge, Badges } from "@paperplane-ui";
+```
+
+```tsx copy
+<Badges stagger={0.3} length={4} className="w-[256px]">
+  <Badge children="badge" />
+  <Badge children="badge" />
+  <Badge children="badge" />
+  <Badge children="badge" />
+  <Badge children="badge" />
+</Badges>
+```

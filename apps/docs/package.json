@@ -1,32 +1,35 @@
 {
-  "name": "@acme/docs",
+  "name": "docs",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "storybook dev -p 6006",
-    "build": "storybook build --docs",
-    "preview-storybook": "serve storybook-static",
-    "clean": "rm -rf .turbo && rm -rf node_modules",
-    "lint": "eslint ./stories/*.stories.tsx"
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "clean": "rm -rf .turbo && rm -rf node_modules"
   },
   "dependencies": {
+    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/themes": "^1.1.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "next": "^13.5.3",
+    "nextra": "^2.13.1",
+    "nextra-theme-docs": "^2.13.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "ui": "workspace:*"
+    "tailwind-merge": "^1.14.0",
+    "ui": "workspace:*",
+    "postcss": "^8.4.28",
+    "prettier": "^3.0.2",
+    "tailwindcss": "^3.3.3",
+    "autoprefixer": "^10.4.15"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^7.4.0",
-    "@storybook/addon-docs": "^7.4.0",
-    "@storybook/addon-essentials": "^7.4.0",
-    "@storybook/addon-links": "^7.4.0",
-    "@storybook/react": "^7.4.0",
-    "@storybook/react-vite": "^7.4.0",
-    "@vitejs/plugin-react": "^1.3.2",
     "eslint-config-custom": "workspace:*",
     "serve": "^13.0.4",
-    "storybook": "^7.4.0",
     "tsconfig": "workspace:*",
-    "typescript": "^5.2.2",
-    "vite": "^4.4.9"
+    "typescript": "^5.2.2"
   }
 }
