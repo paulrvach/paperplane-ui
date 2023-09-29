@@ -141,7 +141,7 @@ function PageTransitionChildrenVariant(): JSX.Element {
   const textContainer = useRef(null);
   const ref = useRef(null);
   const text = useRef(null);
-  const tl = useRef<GSAPTimeline>(gsap.timeline({ paused: true }));
+  const tl = useRef<gsap.core.Timeline>(gsap.timeline({ paused: true }));
 
   const handleTrigger = (): void => {
     setTrigger(!trigger);
