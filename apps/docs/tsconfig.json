@@ -1,5 +1,10 @@
 {
   "extends": "tsconfig/react-app.json",
   "include": ["."],
+  "compilerOptions": {
+    "paths": {
+      "components" : ["./components"]
+    }
+  },
   "exclude": ["dist", "build", "node_modules"]
 }

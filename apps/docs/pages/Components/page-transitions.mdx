@@ -1,0 +1,269 @@
+import React, { useState } from "react";
+import { Steps } from "nextra/components";
+import { Tabs, Code } from "@radix-ui/themes";
+import {
+  PropsCard,
+  CodeMinimizer,
+  PageTransitionVariant,
+  PageTransitionChildrenVariant,
+} from "components";
+
+# Page Transition
+
+The <Code>PageTransition</Code> component is a versatile React element that enables customizable and animated transitions between pages or content, featuring options for resolution, animation direction, and triggering based on user interactions. It seamlessly enhances the user experience by providing visually appealing transitions for single-page applications.
+
+<div className="w-full h-8" />
+
+## Components
+
+### PageTransition
+
+<Tabs.Root defaultValue="preview">
+  <Tabs.List>
+    <Tabs.Trigger value="preview">Preview</Tabs.Trigger>
+    <Tabs.Trigger value="code">Code</Tabs.Trigger>
+  </Tabs.List>
+  <div className="w-full h-full" >
+    <Tabs.Content value="preview" className="w-full  h-[512px]">
+      <PageTransitionVariant />
+    </Tabs.Content>
+    <Tabs.Content value="code">
+      ```jsx copy
+      <PageTransition
+        direction={"y"}
+        ease={"none"}
+        resolution={16}
+        stagger={0.1}
+        trajectory={"default"}
+        trigger={false}
+      />
+
+      ````
+    </Tabs.Content>
+
+  </div>
+</Tabs.Root>
+
+<div className="w-full h-8" />
+
+### PageTransition <p className="text-sm font-normal inline-block">_(with Children)_</p>
+
+<Tabs.Root defaultValue="preview">
+  <Tabs.List>
+    <Tabs.Trigger value="preview">Preview</Tabs.Trigger>
+    <Tabs.Trigger value="code">Code</Tabs.Trigger>
+  </Tabs.List>
+  <div className="w-full h-full" >
+    <Tabs.Content value="preview" className="w-full  h-[512px]">
+      <PageTransitionChildrenVariant />
+    </Tabs.Content>
+    <Tabs.Content value="code">
+      ```jsx copy
+        <PageTransition
+          direction="x"
+          ease="power2.in"
+          resolution={16}
+          stagger={0.1}
+          delay={2.6}
+          trajectory="reversed"
+          trigger={trigger}
+        >
+          <div className="flex items-center">
+            <div
+              className="text-5xl text-white overflow-hidden "
+              ref={container}
+            >
+              <img
+                ref={ref}
+                src="https://res.cloudinary.com/dxmqknhgj/image/upload/v1692744161/ButtonIcon-gray_yae3pe.png"
+                alt="img"
+                style={{ height: "72px" }}
+              />
+            </div>
+            <div className="overflow-hidden" ref={textContainer}>
+              <p ref={text} className="text-white text-3xl">
+                paperplane-ui
+              </p>
+            </div>
+          </div>
+
+      ````
+    </Tabs.Content>
+
+  </div>
+</Tabs.Root>
+
+<div className="w-full h-8" />
+
+## API Reference
+
+### PageTransition
+
+<PropsCard
+  name="children"
+  description="Children will be centered on the page absolutly"
+  type="JSX.Element"
+/>
+<PropsCard
+  name="direction"
+  description="Direction of animation."
+  type='"y" | "x"'
+/>
+
+<PropsCard
+  name="ease"
+  description="Type of easing for the animation."
+  type="gsap.TweenVars['ease']"
+/>
+
+<PropsCard
+  name="resolution"
+  description="Resolution of the animation."
+  type="number"
+/>
+
+<PropsCard
+  name="stagger"
+  description="Stagger value for animation."
+  type="number"
+/>
+
+<PropsCard
+  name="trajectory"
+  description="Trajectory of the animation."
+  type='"default" | "reversed"'
+/>
+
+<PropsCard
+  name="trigger"
+  description="Indicates whether the animation should be triggered."
+  type="boolean"
+/>
+
+<div className="w-full h-8" />
+
+## Installation
+
+<Tabs.Root defaultValue="Manual">
+  <Tabs.List>
+    <Tabs.Trigger value="Manual">Manual</Tabs.Trigger>
+    <Tabs.Trigger value="CLI">CLI</Tabs.Trigger>
+  </Tabs.List>
+
+  <div className="px-4 pt-3 pb-2">
+    <Tabs.Content value="Manual">
+      <Steps>
+				### Step 1
+				 
+				Install dependiencies
+
+    			```bash copy
+    			npm install gsap
+    			```
+
+    			### Step 2
+
+    			Copy and paste code into your project
+    			<CodeMinimizer>
+    			```tsx copy
+                import {
+                  useLayoutEffect,
+                  useEffect,
+                  useRef,
+                  type HTMLAttributes,
+                } from "react";
+                import gsap from "gsap";
+                import { cn } from "../utils";
+
+                type EaseString = "none" | "power1" | "power1.in" | "power1.out" | "power1.inOut" | "power2" | "power2.in" | "power2.out" | "power2.inOut" | "power3" | "power3.in" | "power3.out" | "power3.inOut" | "power4" | "power4.in" | "power4.out" | "power4.inOut" | "back" | "back.in" | "back.out" | "back.inOut" | "bounce" | "bounce.in" | "bounce.out" | "bounce.inOut" | "circ" | "circ.in" | "circ.out" | "circ.inOut" | "elastic" | "elastic.in" | "elastic.out" | "elastic.inOut" | "expo" | "expo.in" | "expo.out" | "expo.inOut" | "sine" | "sine.in" | "sine.out" | "sine.inOut";
+
+                interface PageLoaderProps extends HTMLAttributes<HTMLDivElement> {
+                  resolution: number;
+                  delay?: number;
+                  stagger?: number;
+                  ease?: EaseString;
+                  trigger: boolean;
+                  direction?: "x" | "y";
+                  trajectory?: "default" | "reversed";
+                }
+
+                function PageTransition({
+                  resolution,
+                  delay = 0,
+                  stagger,
+                  ease = "none",
+                  trigger,
+                  children,
+                  className,
+                  direction = "y",
+                  trajectory = "default",
+                  ...props
+                }: PageLoaderProps): JSX.Element {
+                  const resArray = Array.from({ length: resolution }, () => "");
+                  const tl = useRef<GSAPTimeline | null>(null);
+                  const refs = useRef<HTMLDivElement[] | null[]>([]);
+                  const childRef = useRef(null);
+                  const gsapDirection: { x?: string; y?: string } = {};
+                  gsapDirection[direction] = trajectory === "default" ? "100%" : "-100%";
+
+                  useLayoutEffect(() => {
+                    const ctx = gsap.context(() => {
+                      tl.current = gsap.timeline({ paused: true }).to(refs.current, {
+                        ...gsapDirection,
+                        stagger: stagger,
+                        ease: ease,
+                        delay: delay,
+                      });
+                    }, refs.current);
+
+                    return () => ctx.revert();
+                  }, [stagger, ease, delay, trajectory, direction]);
+
+                  useEffect(() => {
+                    trigger ? tl.current?.play() : tl.current?.reverse();
+                  }, [trigger]);
+
+                  return (
+                    <div
+                      className={cn(
+                        "w-full h-full flex justify-evenly overflow-hidden",
+                        direction === "x" ? "flex-col" : "flex-row"
+                      )}
+                    >
+                      {resArray.map((item, index) => (
+                        <div
+                          key={index}
+                          className={cn("w-full h-full bg-primary", className)}
+                          ref={(ele): void => {
+                            refs.current[index] = ele;
+                          }}
+                        />
+                      ))}
+                      <div
+                        className="absolute p-4 text-center transform -translate-x-1/2 -translate-y-1/2  top-1/2 left-1/2"
+                        ref={childRef}
+                      >
+                        {children}
+                      </div>
+                    </div>
+                  );
+                }
+
+                export { PageTransition };
+                export type { PageLoaderProps };
+    			```
+    			</CodeMinimizer>
+
+    			### Step 3
+
+    			Update `tailwind.config.js`
+
+    			</Steps>
+    </Tabs.Content>
+
+    <Tabs.Content value="CLI">
+      <p>Under Construction</p>
+    </Tabs.Content>
+
+  </div>
+</Tabs.Root>
