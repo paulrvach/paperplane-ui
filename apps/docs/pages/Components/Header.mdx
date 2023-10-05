@@ -1,0 +1,276 @@
+import { HeadingExample, CodeMinimizer, PropsCard } from "components";
+import { Tabs } from "@radix-ui/themes";
+import { Steps } from "nextra/components";
+
+# Heading
+
+The Heading Component is a versatile user interface (UI) element commonly used in web and application design to display titles, section headers, and other important textual content. It allows developers to create visually appealing and structured content by customizing various aspects of the heading, including text size, font style, color, and alignment.
+
+<div className="w-full h-8" />
+
+## Components
+
+### Heading
+
+<Tabs.Root defaultValue="preview">
+  <Tabs.List>
+    <Tabs.Trigger value="preview">Preview</Tabs.Trigger>
+    <Tabs.Trigger value="code">Code</Tabs.Trigger>
+  </Tabs.List>
+  <div className="px-4 pt-3 pb-2">
+    <Tabs.Content value="preview">
+    <HeadingExample />
+
+    </Tabs.Content>
+
+    <Tabs.Content value="code">
+      ```jsx copy
+    <Heading className="border">
+        <HeadingAvatar alt="paper-plane" fallback="P" asChild>
+          <img alt="" src="https://res.cloudinary.com/dxmqknhgj/image/upload/v1694580504/Untitled_video_-_Made_with_Clipchamp_1_kq87qt.gif" />
+        </HeadingAvatar>
+        <HeadingHeaders
+          headline="Headline"
+          subhead="Subhead"
+          supporting="Color values are implemented through design tokens. For design, this means working with color values that correspond with tokens. For implementation, a color value will be a token that references a value. Learn more about design tokens"
+        />
+
+        <div className="w-[64px] h-[64px] flex items-center justify-center">
+          <DotsVerticalIcon className="h-6 w-6" />
+        </div>
+    </Heading>
+      ````
+    </Tabs.Content>
+
+  </div>
+
+</Tabs.Root>
+
+<div className="w-full h-8" />
+
+## API Reference
+
+### Heading
+
+<PropsCard
+  name="ref"
+  description="React Ref. Object"
+  type="React.ForwardedRef<HTMLDivElement>"
+/>
+
+### HeadingAvatar
+
+<PropsCard name="src" description="Image elemant" type="string" />
+<PropsCard
+  name="fallback"
+  description="An element that renders when the image hasn't loaded."
+  type="string"
+/>
+<PropsCard
+  name="size"
+  description="Size of Avatar."
+  type="'sm' | 'md' | 'lg' "
+/>
+
+### HeadingHeaders
+
+<PropsCard
+  name="headline"
+  description="Main headline of header. Tailwind: text-xl"
+  type="string "
+/>
+<PropsCard
+  name="subhead"
+  description="Sub headline of header. Tailwind: text-lg"
+  type="string"
+/>
+<PropsCard
+  name="supporting"
+  description="Explain more about the topic shown in the headline and subhead through supporting text."
+  type="string "
+/>
+
+## Installation
+
+<Tabs.Root defaultValue="Manual">
+  <Tabs.List>
+    <Tabs.Trigger value="Manual">Manual</Tabs.Trigger>
+    <Tabs.Trigger value="CLI">CLI</Tabs.Trigger>
+  </Tabs.List>
+
+  <div className="px-4 pt-3 pb-2">
+    <Tabs.Content value="Manual">
+      <Steps>
+        ### Step 1
+
+        Install Dependencies
+
+        ```bash copy
+        npm install @radix-ui/react-avatar class-variance-authority
+        ```
+
+    			### Step 2
+
+    			Copy and paste code into your project
+
+       <CodeMinimizer>
+
+        ```tsx copy
+        import { type HTMLAttributes, forwardRef } from "react";
+        import * as Avatar from "@radix-ui/react-avatar";
+        import { cva, type VariantProps } from "class-variance-authority";
+        import { cn } from "../utils";
+
+        interface HeadingProps extends HTMLAttributes<HTMLDivElement> {}
+
+        const Heading = forwardRef<HTMLDivElement, HeadingProps>(
+          ({ children, className, ...props }, ref) => {
+            return (
+              <div
+                className={cn("flex rounded-lg gap-4 w-full p-3", className)}
+                ref={ref}
+                {...props}
+              >
+                {children}
+              </div>
+            );
+          }
+        );
+
+        Heading.displayName = "Heading";
+
+        const headingAvatarVariants = cva(
+          "rounded-lg select-none items-center justify-center overflow-hidden flex-none bg-secondary rounded-radius",
+          {
+            variants: {
+              size: {
+                sm: "h-[48px] w-[48px]",
+                md: "h-[64px] w-[64px]",
+                lg: "h-[96px] w-[96px]",
+              },
+            },
+            defaultVariants: {
+              size: "md",
+            },
+          }
+        );
+
+        interface HeadingIconAvatar
+          extends Avatar.AvatarProps,
+            VariantProps<typeof headingAvatarVariants> {
+          src?: string;
+          fallback: string;
+          alt?: string;
+        }
+
+        const HeadingAvatar = forwardRef<HTMLDivElement, HeadingIconAvatar>(
+          (
+            { alt, className, children, asChild, src, fallback, size, ...props },
+            ref
+          ) => {
+            return (
+              <Avatar.Root
+                className={cn(headingAvatarVariants({ size }), className)}
+                ref={ref}
+                {...props}
+              >
+                {asChild ? (
+                  children
+                ) : (
+                  <Avatar.Image
+                    alt={alt}
+                    className="h-full w-full rounded-[inherit] object-cover"
+                    src={src}
+                  />
+                )}
+                <Avatar.Fallback
+                  className="text-primary leading-1 flex h-full w-full font-medium items-center justify-center rounded-[inherit]"
+                  delayMs={600}
+                >
+                  {fallback}
+                </Avatar.Fallback>
+              </Avatar.Root>
+            );
+          }
+        );
+
+        HeadingAvatar.displayName = "Heading.Icon";
+
+        interface HeadingHeadersProps
+          extends HTMLAttributes<HTMLDivElement>,
+            VariantProps<typeof headingHeadersVariants> {
+          headline: string;
+          subhead?: string;
+          supporting?: string;
+        }
+
+        const headingHeadersVariants = cva("", {
+          variants: {
+            size: {},
+          },
+        });
+
+        const HeadingHeaders = forwardRef<HTMLDivElement, HeadingHeadersProps>(
+          ({ className, headline, subhead, supporting, ...props }, ref) => {
+            return (
+              <div
+                className={cn("w-full flex flex-col gap-8 flex-wrap grow", className)}
+                ref={ref}
+                {...props}
+              >
+                <div className="flex flex-col gap-1 w-full">
+                  <p className="text-xl font-semibold">{headline}</p>
+                  {subhead ? <p className="text-lg">{subhead}</p> : null}
+                </div>
+                {supporting ? <p>{supporting}</p> : null}
+              </div>
+            );
+          }
+        );
+
+        HeadingHeaders.displayName = "Heading.Headers";
+
+        const Root = Heading;
+        const Icon = HeadingAvatar;
+        const Headers = HeadingHeaders;
+
+        export {
+          Heading,
+          HeadingAvatar,
+          HeadingHeaders,
+          //
+          Root,
+          Icon,
+          Headers,
+        };
+
+        ```
+
+        </CodeMinimizer>
+
+    			### Step 3
+
+    			Update imports
+
+    			</Steps>
+    </Tabs.Content>
+
+    <Tabs.Content value="CLI">
+      <p>Under Construction</p>
+    </Tabs.Content>
+
+  </div>
+</Tabs.Root>
+
+## Usage
+
+```tsx copy
+import { Heading, HeadingAvatar, HeadingHeaders } from "@paperplane-ui";
+```
+
+```tsx copy
+<Heading className="">
+  <HeadingAvatar alt="" fallback="" src="" />
+  <HeadingHeaders headline="" subhead="" supporting="" />
+</Heading>
+```
